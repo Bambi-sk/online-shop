@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #2c583f;" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://ultraq.net.nz/thymeleaf/layout  " xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#"></a>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item" style="color: white;">
+                        <a class="nav-link" th:href="@{'/'}"><i class="fab fa-autoprefixer"></i>ALL E-SHOP</a>
+                    </li>
+
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <div class="dropdown">
+                        <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #2c583f;">
+                            <a >Lang</a>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="?lng=rus">RUS</a>
+                            <a class="dropdown-item" href="?lng=qaz">QAZ</a>
+                            <a class="dropdown-item" href="?lng=eng">ENG</a>
+
+                        </div>
+                    </div>
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item" >
+                            <a class="nav-link" th:href="@{'/basket'}">Basket</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link" th:href="@{'/login'}">Login</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasAnyRole('ROLE_USER')">
+                            <a class="nav-link" href="JavaScript:void(0)" onclick="document.getElementById('logoutFormId').submit()">Logout</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link" th:href="@{'/profile'}" th:text="${currentUser.getFullName()}"></a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasAnyRole('ROLE_MODERATOR','ROLE_ADMIN')">
+                            <a class="nav-link" th:href="@{'/panel'}" >Panel</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link" th:href="@{'/reg'}" >Registration</a>
+                        </li>
+                        <form th:action="@{'/signout'}" sec:authorize="isAuthenticated()" method="post" id="logoutFormId" >
+                            <button class="btn btn-success">Logout</button>
+
+                        </form>
+                    </ul>
+                </form>
+            </div>
+    </div>
+</nav>

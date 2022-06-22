@@ -1,0 +1,28 @@
+<html  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/admin.html">
+<div  layout:fragment = "list">
+
+    <table class="table mt-5">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col" th:text="#{label.commenttext}"></th>
+            <th scope="col" th:text="#{label.author}"></th>
+            <th scope="col" th:text="#{label.item}"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="it:${comments}">
+            <td th:text="${it.getId()}"  scope="row"></td>
+            <th th:text="${it.getComment()}"></th>
+            <td th:text="${it.getAuthors().getFullName()}"></td>
+            <td th:text="${it.getItems().getName()}"></td>
+            <td><form method="post" action="/deleteCommentByAdmin">
+                <input type="hidden" name="comment_id" th:value="${it.getId()}">
+                <button class="btn btn-danger" th:text="#{label.delete}"></button></form> </td>
+        </tr>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</html>

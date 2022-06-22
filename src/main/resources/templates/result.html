@@ -1,0 +1,98 @@
+<html  xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main.html">
+<div layout:fragment = "site_content">
+    <div class="row">
+        <form class="form" style="width: 100%;" action="/searchByAll" method="get">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputEmail4" th:text="#{label.name}"></label>
+                    <input type="text" name="name" class="form-control" id="inputEmail4" th:value="${name_search}">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputPassword4" th:text="#{label.priceFrom}"></label>
+                    <input type="number" name="price1" min="0" class="form-control" id="inputPassword4" >
+                </div>
+                <div class="form-group col-md-2">
+                    <label th:text="#{label.priceTo}" ></label>
+                    <input type="number"  name="price2" min="0" class="form-control"  >
+                </div>
+                <div class="form-group col-md-2" style="margin-top: auto">
+                    <label ></label>
+                    <button class="btn btn-success" th:text="#{button.search}"></button>
+                </div>
+                <div class="form-group col-md-2">
+                    <label  th:text="#{label.brand}"></label>
+                    <select  class="form-control" name="brandId" >
+                        <option th:each="brn:${brands}" th:text="${brn.getName()}" th:value="${brn.getId()}" th:selected="${brn!=null&&brn.id==brandId}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <h4 style="font-weight: bold;" th:text="#{label.searchResult}"></h4>
+                </div>
+                <div class="form-group col-md-2">
+                    <p th:text="#{label.orderByPrice}" ></p>
+                </div>
+                <div class="form-group col-md-4">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="options1" value="asc" id="option1" autocomplete="off" checked="checked" th:text="#{label.asc}">
+                            </label>
+                            <label class="btn btn-secondary ">
+                                <input type="radio" name="options1" value="desc" id="option2" autocomplete="off"  th:text="#{label.desc}">
+                            </label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="form-row">
+
+
+            <div class="form-group col-md-4">
+              <!--  <form action="/searchByAll" method="get">
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="options1" value="asc" id="option1" autocomplete="off" checked="checked"> Active
+                        </label>
+                        <label class="btn btn-secondary ">
+                            <input type="radio" name="options1" value="desc" id="option2" autocomplete="off" > Active
+                        </label>
+                </form>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="row  " style="margin-top: 20px;">
+        <div class="col-lg-4" th:each="it:${itemsByn}" >
+            <div class="card" style="width: 16rem;max-height: 95%">
+                <img  th:src="${it.getSmallPicURL()}"  class="card-img-top" style="max-height: 150px;min-height: 150px;" alt="">
+                <div class="card-body" >
+                    <h5 class="card-title" style="color: dodgerblue" th:text="${it.getName()}"></h5>
+                    <h5 class="card-title" th:text="${it.getPrice()}">$$</h5>
+                    <a th:href="@{'/details/'+${it.getId()}}" class="btn btn-info btn-sm" th:text="#{label.details}"></a>
+                    <div class="row mt-2 ml-2 ml-n1">
+                        <form action="/addBasket" method="post">
+                            <input type="hidden" name="id" th:value="${it.getId()}">
+                            <button  class="btn btn-light btn-md mr-1 mb-2 float-right" style="display: inline-flex;height:70%;"><i
+                                    style="margin-top: 5px;" class="fas fa-shopping-cart pr-2"></i><p th:text="#{label.addBasket}"></p></button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-footer text-muted" >
+                    <th:block th:each="i: ${#numbers.sequence(1,it.getStars(),1)}">
+                        <i class="fas fa-star" style="color: gold"></i>
+                    </th:block>
+
+                    <th:block th:each="i: ${#numbers.sequence(1,5 - it.getStars(),1)}">
+                        <i class="fas fa-star" ></i>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</html>

@@ -1,0 +1,101 @@
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css'}" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <script th:src="@{'https://code.jquery.com/jquery-3.5.1.slim.min.js'}" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script th:src="@{'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js'}" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script th:src="@{'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js'}" crossorigin="anonymous"></script>
+    <link rel="stylesheet"  th:href="@{'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'}">
+    <script th:src="@{'https://kit.fontawesome.com/b8d631eee1.js'}" crossorigin="anonymous"></script>
+    <title>Title</title>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #2c583f;color: white;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#"></a>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{'/'}"><i class="fab fa-autoprefixer"></i>ALL E-SHOP</a>
+            </li>
+
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <div class="dropdown">
+                <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: white">
+                    <a href="?lng=eng">ENG</a>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="?lng=rus">RUS</a>
+                    <a class="dropdown-item" href="?lng=qaz">QAZ</a>
+
+                </div>
+            </div>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/addItemlist">Link</a>
+                </li>
+            </ul>
+        </form>
+    </div>
+</nav>
+<div class="container mt-6">
+    <form th:action="@{'/addItem'}" method="post">
+        <div class="form-group">
+            <label   th:text="#{label.name}"></label>
+            <input type="text" name="name" class="form-control" placeholder="Enter name ...">
+
+        </div>
+        <div class="form-group">
+            <label th:text="#{label.description}"></label>
+            <textarea class="form-control" name="description" rows="3" placeholder="Enter description ..." ></textarea>
+        </div>
+        <div class="form-group">
+            <label  th:text="#{label.rating}"></label>
+            <select  class="form-control" name="rating">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+
+            </select>
+        </div>
+        <div class="form-group" >
+            <label th:text="#{label.price}"></label>
+            <input type="number" name="price" class="form-control" min="0">
+        </div>
+        <div class="form-group" >
+            <label th:text="#{label.largePic}" ></label>
+            <input type="text" name="largePicUrl" class="form-control" placeholder="Enter url ...">
+        </div>
+        <div class="form-group" >
+            <label th:text="#{label.smallPic}" ></label>
+            <input type="text" name="smallPicUrl" class="form-control" placeholder="Enter url ...">
+        </div>
+        <div class="form-group" >
+            <label th:text="#{label.inTop}" ></label>
+            <select  class="form-control" name="inTop">
+                <option value="YES">YES</option>
+                <option value="NO">NO</option>
+            </select>
+        </div>
+        <button th:text="#{button.add}" class="btn btn-success"></button>
+    </form>
+
+</div>
+<footer class="page-footer font-small blue">
+
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+        <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+    </div>
+
+</footer>
+</body>
+</html>

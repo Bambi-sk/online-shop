@@ -1,0 +1,120 @@
+
+<html  xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main.html" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div layout:fragment = "site_content">
+        <div class="card mb-3">
+            <img th:src="${item.getLargePicURL()}" class="card-img-top" style="max-height:450px;">
+            <div class="card-body">
+                <h5 class="card-title" style="color: dodgerblue" th:text="${item.getName()}"></h5>
+                <h5 class="card-title" style="color: black" th:text="${item.getPrice()}"></h5>
+                <p class="card-text" th:text="${item.getDescription()}"></p>
+
+               <!-- <div class="one-time slick-arrow" th:each="p:${pictures}">
+                    <div class="one-time slick-arrow">  <img th:src="@{'/viewItemsPictures/'+${p.getUrl()}}" class="my-3" style="width:97%;max-height:50px;"> </div>
+                </div>-->
+
+                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" th:if="${!pictures.isEmpty()}">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img th:src="@{'/viewItemsPictures/'+${pictures.get(0).url}}" style="width:97%;max-height:30%;" class="d-block w-50 mx-auto " >
+                            </div>
+                            <div class="carousel-item" th:each="i: ${#numbers.sequence(1,pictures.size()-1)}">
+                                <img  th:src="@{'/viewItemsPictures/'+${pictures.get(i).getUrl()}}"  style="width:97%;max-height:30%;" class="d-block w-50 mx-auto" >
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color:darkgrey;"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true" style="background-color:darkgrey;"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+
+            </div>
+            <div class="card-footer text-muted">
+                <th:block th:each="i: ${#numbers.sequence(1,item.getStars(),1)}">
+                    <i class="fas fa-star" style="color: gold"></i>
+                </th:block>
+
+                <th:block th:each="i: ${#numbers.sequence(1,5 - item.getStars(),1)}">
+                    <i class="fas fa-star" ></i>
+                </th:block>
+            </div>
+        </div>
+        <div class="row mt-4 ml-2">
+
+                <form action="/addBasket" method="post">
+                    <input type="hidden" name="id" th:value="${item.getId()}">
+                    <button  class="btn btn-light btn-md mr-1 mb-2 float-right" style="display: inline-flex;height:70%;"><i
+                            style="margin-top: 5px;" class="fas fa-shopping-cart pr-2"></i><p th:text="#{label.addBasket}"></p></button>
+                </form>
+
+
+        </div>
+        <div class="row mt-2 ml-1" sec:authorize="isAuthenticated()">
+            <form action="/addComment" method="post" style="width: 98%;">
+                <div class="form-group" >
+                    <input type="hidden" name="item_id" th:value="${item.getId()}">
+                    <label sec:authorize="isAuthenticated()" th:text="#{label.commenttext}"></label>
+                    <textarea class="form-control" name="comment" sec:authorize="isAuthenticated()" rows="3"></textarea>
+                </div>
+                <button class="btn btn-primary float-right" th:text="#{label.addComment}"></button>
+            </form>
+        </div>
+        <div class="row mt-2 ml-1" th:each="cm:${comments}">
+            <div class="card" style="width:98%;">
+                <div class="card-body">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" th:text="${cm.getAuthors().getFullName()}"></h5>
+                        <small th:text="${cm.getAddedDate()}"></small>
+                    </div>
+                    <div class="d-flex w-100 justify-content-between" >
+                        <p style="width: 85%;" class="card-text" th:text="${cm.getComment()}"></p>
+                        <div  th:if="${currentUser!=null}" style="display: inline-flex;">
+
+                            <button th:if="${currentUser!=null && currentUser.getId()==cm.getAuthors().getId()}"  type="button" class="btn btn-success mr-1" style="height:31px;width:48%;" data-toggle="modal" th:data-target="'#' + 'editComment' + ${cm.getId()}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <form action="/deleteComment" method="post">
+                                <input type="hidden" name="item_id" th:value="${item.getId()}">
+                                <input type="hidden" name="comment_id" th:value="${cm.getId()}">
+                                <button class="btn btn-dark" th:if="${(currentUser.getId()==cm.getAuthors().getId() || isModer==true)&& currentUser!=null }" ><i class="fas fa-trash-alt"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal fade" th:id="'editComment' + ${cm.getId()}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel" th:text="#{label.editComment}"></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="/updateComment" method="post">
+                                    <div class="modal-body">
+                                        <input type="hidden" name="item_id" th:value="${item.getId()}">
+                                        <input type="hidden" name="comment_id" th:value="${cm.getId()}">
+                                        <label sec:authorize="isAuthenticated()" th:text="#{label.commenttext}"></label>
+                                        <textarea class="form-control" name="comment" th:text="${cm.getComment()}" sec:authorize="isAuthenticated()" rows="3"></textarea>
+                                        <button class=" btn btn-success float-right mt-2"> <i class="fas fa-edit"></i></button>
+                                    </div>
+
+                                </form>
+                                <div class="modal-footer">
+                                    <button type="button" th:text="#{button.close}" class="btn btn-secondary" data-dismiss="modal"></button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</html>

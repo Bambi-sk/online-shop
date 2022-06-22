@@ -1,0 +1,26 @@
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/admin.html">
+<div layout:fragment = "list" >
+    <div class="container">
+        <form  th:action="@{'/saveRole'}" method="post">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label   th:text="#{label.name}"></label>
+                    <input type="text" name="name" class="form-control" th:value="${role.getName()}">
+                    <input type="hidden" name="id" th:value="${role.getId()}">
+                </div>
+                <div class="form-group">
+                    <label  th:text="#{label.description}"></label>
+                    <input type="text" name="description" class="form-control" th:value="${role.getDescription()}">
+                </div>
+
+            </div>
+            <button  class="btn btn-success ml-2" th:text="#{label.save}"></button>
+        </form>
+        <form  th:action="@{'/deleteRole'}" method="post">
+            <input type="hidden" name="id" class="form-control" th:value="${role.getId()}" >
+            <button  style="margin-top: 10px; " class="btn btn-danger ml-2" th:text="#{label.delete}" ></button>
+        </form>
+    </div>
+
+</div>
+</html>

@@ -1,0 +1,28 @@
+<html  xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/auth.html">
+    <div layout:fragment = "form">
+            <div class="container" >
+                <div class="row">
+                    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                        <div class="card card-signin my-5">
+                            <div class="card-body">
+                                <h5 class="card-title text-center" th:text="#{label.signin}"></h5>
+                                <form class="form-signin" method="post" th:action="@{'/auth'}">
+                                    <div class="form-label-group">
+                                        <input type="email" id="inputEmail" class="form-control" name="user_email"  required autofocus>
+                                        <label for="inputEmail" th:text="#{label.emailAddress}" ></label>
+                                    </div>
+
+                                    <div class="form-label-group">
+                                        <input type="password" name="user_password" id="inputPassword" class="form-control" placeholder="Password" required>
+                                        <label for="inputPassword" th:text="#{label.password}"></label>
+                                    </div>
+
+                                    <button class="btn btn-lg  btn-block text-uppercase" type="submit" th:text="#{label.signin}" style="background-color: #2c583f;color: white"></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</html>

@@ -1,0 +1,25 @@
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <a class="navbar-brand" th:href="@{'/itemsList'}" th:text="#{li.panel}"></a>
+    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </form>
+    <!-- Navbar-->
+    <ul class="navbar-nav ml-auto ml-md-0">
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link"  th:text="#{li.logout}"  href="JavaScript:void(0)" onclick="document.getElementById('logoutFormId').submit()"></a>
+            </li>
+            <li class="nav-item" sec:authorize="hasAnyRole('ROLE_MODERATOR','ROLE_ADMIN')">
+                <a class="nav-link" th:href="@{'/'}"  th:text="#{label.home}"></a>
+            </li>
+            <form th:action="@{'/signout'}" sec:authorize="hasAnyRole('ROLE_MODERATOR','ROLE_ADMIN')" method="post" id="logoutFormId" >
+
+            </form>
+    </ul>
+</nav>

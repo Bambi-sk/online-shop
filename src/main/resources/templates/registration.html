@@ -1,0 +1,37 @@
+
+<html  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/auth.html">\
+<div layout:fragment = "form">
+    <div class="container" >
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+                        <h5 class="card-title text-center" th:text="#{li.register}"></h5>
+                        <form class="form-signin" th:action="@{'/registration'}" method="post">
+                            <div class="form-label-group">
+                                <input type="text"  id="inputEmail1"name="full_name"  class="form-control"  required>
+                                <label for="inputEmail1"  th:text="#{label.fullname}"></label>
+                            </div>
+                            <div class="form-label-group">
+                                <input type="email" id="inputEmail" class="form-control" name="user_email"  required autofocus>
+                                <label for="inputEmail" th:text="#{label.emailAddress}"></label>
+                            </div>
+
+                            <div class="form-label-group">
+                                <input type="password" name="user_password" id="inputPassword" class="form-control"  required>
+                                <label th:text="#{label.password}" for="inputPassword"></label>
+                            </div>
+                            <div class="form-label-group">
+                                <input type="password"  id="inputPassword1" name="user_password2"  class="form-control"  required>
+                                <label for="inputPassword1" th:text="#{label.retypePassword}"></label>
+                            </div>
+
+                            <button class="btn btn-lg btn-block text-uppercase"  style="background-color: #2c583f;color: white" type="submit" th:text="#{li.register}"> </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

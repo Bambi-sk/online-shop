@@ -1,0 +1,27 @@
+<html  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/admin.html">
+<div  layout:fragment = "list">
+    <div class="row">
+
+    </div>
+    <table class="table mt-5">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col" th:text="#{label.item}"></th>
+            <th scope="col" th:text="#{label.fullname}"></th>
+            <th scope="col" th:text="#{label.addedDate}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="it:${orders}">
+            <td th:text="${it.getId()}"  scope="row"></td>
+            <th th:text="${it.getItems().getName()}"></th>
+            <td th:text="${it.getFullName()}"></td>
+            <td th:text="${it.getAddedDate()}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+</html>

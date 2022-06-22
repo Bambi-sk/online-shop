@@ -1,0 +1,63 @@
+<html  xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/admin.html"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" > >
+<div  layout:fragment = "list">
+    <div class="row">
+        <button th:text="#{label.addbrand}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+
+        </button>
+    </div>
+    <table class="table mt-5">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col" th:text="#{label.name}"></th>
+            <th scope="col" th:text="#{label.country}"></th>
+            <th scope="col" th:text="#{label.action}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="it:${brands}">
+            <td th:text="${it.getId()}" scope="row"></td>
+            <th th:text="${it.getName()}" ></th>
+            <td th:text="${it.getCountry().getName()}"></td>
+            <td><a  th:href="@{'/detailsBrands/'+${it.getId()}}" class="btn btn-info btn-sm" th:text="#{label.details}"></a></td>
+        </tr>
+        </tr>
+        </tbody>
+    </table>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" th:text="#{label.addbrand}"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form  th:action="@{'/addBrand'}" method="post">
+                        <div class="form-group">
+                            <label   th:text="#{label.name}"></label>
+                            <input type="text" name="name" class="form-control">
+
+                        </div>
+                        <div class="form-group" >
+                            <label  th:text="#{label.country}"></label>
+                            <select  class="form-control" name="countryId">
+                                <option th:each="ctn: ${countries}" th:text="${ctn.getName()}" th:value="${ctn.getId()}"></option>
+
+                            </select>
+                        </div>
+
+
+                        <button   th:text="#{button.add}" class="btn btn-success"></button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button th:text="#{button.close}" type="button" class="btn btn-secondary" data-dismiss="modal"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

@@ -1,0 +1,24 @@
+
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  ang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/admin.html">
+<div layout:fragment = "list" >
+    <form  th:action="@{'/saveCategory'}" method="post">
+        <div class="modal-body">
+            <div class="form-group">
+                <label   th:text="#{label.name}"></label>
+                <input type="text" name="name" class="form-control" th:value="${category.getName()}">
+                <input type="hidden" name="id" th:value="${category.getId()}">
+            </div>
+            <div class="form-group">
+                <label  th:text="#{label.url}"></label>
+                <input type="text" name="code" class="form-control" th:value="${category.getLogoURL()}">
+            </div>
+
+        </div>
+        <button  class="btn btn-success ml-2" th:text="#{label.save}"></button>
+    </form>
+    <form s th:action="@{'/deleteCategory'}" method="post">
+        <input type="hidden" name="id" class="form-control" th:value="${category.getId()}" >
+        <button  style="margin-top: 10px; " class="btn btn-danger ml-2" th:text="#{label.delete}"></button>
+    </form>
+</div>
+</html>

@@ -1,0 +1,26 @@
+
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/admin.html">
+<div layout:fragment = "list" >
+    <form  th:action="@{'/saveBrand'}" method="post">
+        <div class="modal-body">
+            <div class="form-group">
+                <label   th:text="#{label.name}"></label>
+                <input type="text" name="name" class="form-control" th:value="${brand.getName()}">
+                <input type="hidden" name="id" th:value="${brand.getId()}">
+            </div>
+
+            <div class="form-group" >
+                <label th:text="#{label.country}"></label>
+                <select  class="form-control" name="countryId" >
+                    <option th:each="ctn:${countries}" th:text="${ctn.getName()}"  th:value="${ctn.getId()}" th:selected="${brand!=null&&brand.country!=null&&brand.country.id==ctn.id}"></option>
+                </select>
+            </div>
+        </div>
+        <button   class="btn btn-success ml-2"  th:text="#{label.save}"></button>
+    </form>
+    <form  th:action="@{'/deleteBrand'}" method="post">
+        <input type="hidden" name="id" class="form-control" th:value="${brand.getId()}" >
+        <button  style="margin-top: 10px; " class="btn btn-danger ml-2" th:text="#{label.delete}"></button>
+    </form>
+</div>
+</html>

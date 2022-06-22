@@ -1,0 +1,51 @@
+<html  xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main.html">
+<div layout:fragment = "site_content">
+    <div class="row">
+        <form class="form-inline" style="width: 100%;" action="/searchByName" method="get">
+            <input class="form-control mr-sm-4"  style="width: 75%;" type="search" name="name"  aria-label="Search">
+            <button class="btn btn-success my-2 my-sm-0" style="width: 20%;"  th:text="#{button.search}"></button>
+        </form>
+    </div>
+    <div class="row" th:insert="~{layout/carousel}">
+
+    </div>
+
+    <div class="row  " style="margin-top: 20px;">
+            <div class="col-lg-4" th:each="it:${items}">
+                <div class="card" style="width: 16rem;max-height: 95%;">
+                    <img   class="card-img-top img-fluid" style="max-height:150px;min-height:150px;" th:src="${it.getSmallPicURL()}"   alt="">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: dodgerblue" th:text="${it.getName()}"></h5>
+                        <h5 class="card-title" th:text="${it.getPrice()}">$$</h5>
+                        <p class="card-text"  th:text="#{label.brand}"> </p>
+                        <a th:href="@{'/searchByBrand/'+${it.getBrands().getId()}}" th:text="${it.getBrands().getName()+' , '+ it.getBrands().getCountry().getName()}"></a>
+                        <div class="row mt-2 ml-2 ml-n1">
+                            <a th:href="@{'/details/'+${it.getId()}}" class="btn btn-info btn-sm" th:text="#{label.details}"></a>
+                        </div>
+                        <div class="row mt-2 ml-2 ml-n1">
+                            <form action="/addBasket" method="post">
+                                <input type="hidden" name="id" th:value="${it.getId()}">
+                                <button  class="btn btn-light btn-md mr-1 mb-2 float-right" style="display: inline-flex;height:70%;"><i
+                                        style="margin-top: 5px;" class="fas fa-shopping-cart pr-2"></i><p th:text="#{label.addBasket}"></p></button>
+                            </form>
+                        </div>
+
+                    </div>
+                    <div class="card-footer text-muted" >
+                        <th:block th:each="i: ${#numbers.sequence(1,it.getStars(),1)}">
+                            <i class="fas fa-star" style="color: gold"></i>
+                        </th:block>
+
+                        <th:block th:each="i: ${#numbers.sequence(1,5 - it.getStars(),1)}">
+                            <i class="fas fa-star" ></i>
+                        </th:block>
+
+                    </div>
+                </div>
+            </div>
+    </div>
+
+</div>
+
+
+</html>
